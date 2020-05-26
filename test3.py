@@ -33,11 +33,11 @@ def recognise_handwriting_pic(access_token,image_path):
 	words_result = j.get('words_result')
 	for i in words_result:
 		print(i.get('words'))
+		word = i.get('words')
+	return word
 
 access_token = get_access_token()  # 获取一次保存下来就够了，一般1个月有效期
 
-# 上传本地图片，逐页识别
-for p in range(1,4):
-	print('\n\n%s\n\n第%d页'%(' *'*20,p))
-	recognise_handwriting_pic(access_token,image_path='E:/test/'+str(p)+'.jpg')
+def test():
+	return recognise_handwriting_pic(access_token,image_path='E:\pycharm\ex2\static\img\icon.jpg')
 
