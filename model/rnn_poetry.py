@@ -141,7 +141,7 @@ class EveryEpoch(tf.keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs):
         if logs['loss'] <= self.loss:
             self.loss = logs['loss']
-            model.save('./rnn_poetry_model.h5')
+            model.save(bast_model_path)
         print('123')
         for i in range(5):
             print(gen_poetry())
@@ -154,7 +154,7 @@ def load_model():
 
 if __name__ == '__main__':
     read_poetry()
-    if os.path.isfile('./rnn_poetry.py'):
+    if os.path.isfile(bast_model_path):
         load_model()
     else:
         model = tf.keras.Sequential([
