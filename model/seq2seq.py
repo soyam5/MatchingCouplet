@@ -245,7 +245,7 @@ def training():
                                                                     batch_acc.numpy()))
             if batch % 100 == 0:
                 # checkpoint.save(file_prefix=checkpoint_prefix)
-                gen_down_couplet(test_text)
+                gen_down_couplet_for_test(test_text)
                 losses.append(batch_loss)
                 accuracy.append(batch_acc)
             if batch % 1000 == 0 and batch != 0:
@@ -256,7 +256,7 @@ def training():
         checkpoint.save(file_prefix=checkpoint_prefix)
         print('Epoch {} Loss {:.4f}'.format(epoch + 1, total_loss / reader.steps_per_epoch))
         print('Time taken for 1 epoch {} sec\n'.format(time.time() - start))
-        gen_down_couplet(test_text)
+        gen_down_couplet_for_test(test_text)
     draw()
 
 
@@ -282,16 +282,21 @@ def evaluate(text):
     return result, text
 
 
-def load_model():
+def load_seq2seq_model():
     checkpoint.restore(tf.train.latest_checkpoint(checkpoint_dir))
 
 
-def gen_down_couplet(text):
+def gen_down_couplet_for_test(text):
     result, text = evaluate(text)
     print("Input : %s" % text)
     print("output: {}".format(result))
 
 
+def gen_down_couplet(text):
+    result, text = evaluate(text)
+    return result
+
+
 if __name__ == '__main__':
-    load_model()
+    load_seq2seq_model()
     training()
