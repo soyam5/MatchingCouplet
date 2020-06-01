@@ -163,7 +163,7 @@ class EveryEpoch(tf.keras.callbacks.Callback):
         losses.append(logs['loss'])
 
 
-def load_model():
+def load_rnn_model():
     global model
     model = tf.keras.models.load_model(bast_model_path)
 
@@ -171,7 +171,7 @@ def load_model():
 if __name__ == '__main__':
     read_poetry()
     if os.path.isfile(bast_model_path):
-        load_model()
+        load_rnn_model()
     else:
         model = tf.keras.Sequential([
             tf.keras.layers.Embedding(input_dim=dicts.size, output_dim=128),
@@ -181,6 +181,5 @@ if __name__ == '__main__':
         ])
         model.compile(optimizer=tf.keras.optimizers.Adam(),
                       loss=tf.keras.losses.sparse_categorical_crossentropy)
-    history = model.fit(dataset.gen(), steps_per_epoch=dataset.steps, epochs=epochs,
-                        callbacks=[EveryEpoch()])
-    draw()
+    # history = model.fit(dataset.gen(), steps_per_epoch=dataset.steps, epochs=epochs, callbacks=[EveryEpoch()])
+    # draw()
