@@ -1,20 +1,22 @@
 import tensorflow as tf
 import numpy as np
+import matplotlib.pyplot as plt
 import collections
 import math
 import os
 
 MAX_LEN = 64
 MIN_LEN = 5
-batch_size = 64
+batch_size = 256
 show = 5
-epochs = 20
+epochs = 40
 path = 'poetry.txt'
 bast_model_path = './rnn_poetry_model.h5'
 disabled_str = ['（', '）', '(', ')', '__', '《', '》', '【', '】', '[', ']']
 poetry = []
 tokens = []
 dicts = []
+losses = []
 dataset = None
 model = None
 
@@ -116,6 +118,17 @@ def read_poetry():
     dataset = PoetryDataSet(poetry, batch_size, dicts)
 
 
+def draw():
+    # 画loss曲线
+    plt.plot(range(len(losses)), losses, 'r')
+    plt.title('Training loss')
+    plt.xlabel("batch")
+    plt.ylabel("Loss")
+    plt.legend(["Loss"])
+    plt.figure()
+    plt.show()
+
+
 def gen_poetry(text=''):
     global dicts, model
     token_ids = dicts.encode(text)
@@ -142,9 +155,12 @@ class EveryEpoch(tf.keras.callbacks.Callback):
         if logs['loss'] <= self.loss:
             self.loss = logs['loss']
             model.save(bast_model_path)
-        print('123')
+        print()
         for i in range(5):
             print(gen_poetry())
+
+    def on_batch_end(self, batch, logs):
+        losses.append(logs['loss'])
 
 
 def load_model():
@@ -165,4 +181,6 @@ if __name__ == '__main__':
         ])
         model.compile(optimizer=tf.keras.optimizers.Adam(),
                       loss=tf.keras.losses.sparse_categorical_crossentropy)
-    model.fit(dataset.gen(), steps_per_epoch=dataset.steps, epochs=epochs, callbacks=[EveryEpoch()])
+    history = model.fit(dataset.gen(), steps_per_epoch=dataset.steps, epochs=epochs,
+                        callbacks=[EveryEpoch()])
+    draw()
