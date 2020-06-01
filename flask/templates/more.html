@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>定义input type="file" 的样式</title><link rel="stylesheet" href="../static/css/index.css-v=1.css" >
+<style type="text/css">
+body{  background-image: url("../static/img/bg.png");}
+input{ vertical-align:middle; margin:0; padding:0}
+.file-box{ position:relative;width:340px}
+.txt{ height:22px; border:1px solid #cdcdcd; width:180px;}
+.btn{ background-color:#FFF; border:1px solid #CDCDCD;height:24px; width:70px;}
+.file{ position:absolute; top:0; right:80px; height:24px; filter:alpha(opacity:0);opacity: 0;width:260px }
+</style>
+
+</head>
+
+<body>
+	<div align="center" ><h1>更多功能</h1> </div>
+    <br>
+	<div align="center">
+		<h2>手写识别</h2>
+		<div class="file-box">
+		<form action="" method="post" enctype="multipart/form-data">
+            <p>
+                <input type="file" name="icon" >
+
+            </p>
+            <h2>图像识别</h2>
+            <p>
+                <input type="file" name="img" >
+            </p>
+            <input type =submit  class="btn" value="上传">
+		</form>
+		</div>
+	</div>
+	<br>
+	<div style="margin:0 auto;border:1px solid #000;width:960px;height:450px">
+		<div style="margin: 0 auto ;border: 1px solid; width: 48%; height: 445px; float: left;">
+			<div style="margin: 0 auto;width: 300px; height: 400px;">
+
+            </div>
+		</div>
+		<div style="margin: 0 auto ;border: 1px solid; width: 48%; height: 445px; float: right;">
+			<div style="margin: 0 auto;width: 300px; height: 400px;">
+
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+      Copyright by：<a href="javascript:if(confirm('none'))window.location='none'" target="_blank">混子队</a> | <a href="javascript:if(confirm('https://github.com/soyam5/MatchingCouplet'))window.location='https://github.com/soyam5/MatchingCouplet'" target="_blank">Github</a> | <a href="{{ url_for("index") }}">返回</a>
+    </div>
+</body>
